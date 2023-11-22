@@ -33,11 +33,15 @@ function App() {
         setItems(updatedItems);
     }
 
+    const clearList = () => {
+        setItems([]);
+    }
+
     return (
         <div className="app">
             <Logo />
             <Form addItem={addItem}/>
-            <PackingList items={items} removeItem={removeItem} packItem={packItem}/>
+            <PackingList items={items} removeItem={removeItem} packItem={packItem} clearList={clearList}/>
             <Stats count={itemsCount} itemPacked={itemPacked}/>
         </div>
     );

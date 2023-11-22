@@ -1,6 +1,5 @@
 const Item = ({item, removeItem, packItem}) => {
 
-
     return ( 
         <li style={item.isPacked ? {textDecoration: "line-through"} : {}}>
             <input
