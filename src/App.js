@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+
+import Logo from './components/Logo';
+import Form from './components/Form';
+import PackingList from './components/PackingList';
+import Stats from './components/Stats';
+import initialItems from './data/mockdata';
+
+import { useState } from 'react';
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    const [items, setItems] = useState(initialItems);
+    const itemsCount = items.length;
+    const itemPacked = items.filter(item => item.isPacked).length;
+
+    const addItem = (item) => {
+        const newItems = [item, ...items];
+        setItems(newItems);
+    }
+
+    const removeItem = (id) => {
+        const updatedItems = items.filter(item => item.id !== id);
+        setItems(updatedItems);
+    }
+
+    const packItem = (id) => {
+        const updatedItems = items.map(item => {
+            if (item.id === id) {
+                return { ...item, isPacked: !item.isPacked }
+            }
+            return item;
+        });
+        setItems(updatedItems);
+    }
+
+    return (
+        <div className="app">
+            <Logo />
+            <Form addItem={addItem}/>
+            <PackingList items={items} removeItem={removeItem} packItem={packItem}/>
+            <Stats count={itemsCount} itemPacked={itemPacked}/>
+        </div>
+    );
 }
 
 export default App;
